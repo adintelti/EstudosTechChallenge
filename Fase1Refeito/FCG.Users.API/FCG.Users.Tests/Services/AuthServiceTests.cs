@@ -1,7 +1,10 @@
 using FCG.Users.Application.DTOs;
+using FCG.Users.Application.Exceptions;
 using FCG.Users.Application.Services;
 using FCG.Users.Infrastructure.Persistence;
 using FCG.Users.Infrastructure.Security;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -11,6 +14,8 @@ namespace FCG.Users.Tests.Services;
 public class AuthServiceTests
 {
     private readonly AppDbContext _context;
+    private readonly Mock<IValidator<RegisterRequest>> _registerValidatorMock;
+    private readonly Mock<IValidator<LoginRequest>> _loginValidatorMock;
     private readonly Mock<IJwtService> _jwtServiceMock;
     private readonly Mock<ILogger<AuthService>> _loggerMock;
 
@@ -21,8 +26,22 @@ public class AuthServiceTests
             .Options;
 
         _context = new AppDbContext(options);
-
         _jwtServiceMock = new Mock<IJwtService>();
+
+        _registerValidatorMock = new Mock<IValidator<RegisterRequest>>();
+        _registerValidatorMock
+        .Setup(x => x.ValidateAsync(
+            It.IsAny<RegisterRequest>(),
+            default))
+        .ReturnsAsync(new ValidationResult());
+
+        _loginValidatorMock = new Mock<IValidator<LoginRequest>>();
+        _loginValidatorMock
+        .Setup(x => x.ValidateAsync(
+            It.IsAny<LoginRequest>(),
+            default))
+        .ReturnsAsync(new ValidationResult());
+
         _loggerMock = new Mock<ILogger<AuthService>>();
     }
 
@@ -32,6 +51,8 @@ public class AuthServiceTests
         var service = new AuthService(
             _context,
             _jwtServiceMock.Object,
+            _registerValidatorMock.Object,
+            _loginValidatorMock.Object,
             _loggerMock.Object);
 
         var request = new RegisterRequest
@@ -73,6 +94,8 @@ public class AuthServiceTests
         var service = new AuthService(
             _context,
             _jwtServiceMock.Object,
+            _registerValidatorMock.Object,
+            _loginValidatorMock.Object,
             _loggerMock.Object);
 
         var request = new LoginRequest
@@ -105,6 +128,8 @@ public class AuthServiceTests
         var service = new AuthService(
             _context,
             _jwtServiceMock.Object,
+            _registerValidatorMock.Object,
+            _loginValidatorMock.Object,
             _loggerMock.Object);
 
         var request = new RegisterRequest
@@ -114,7 +139,7 @@ public class AuthServiceTests
             Password = "123456@Ab"
         };
 
-        var exception = await Assert.ThrowsAsync<Exception>(
+        var exception = await Assert.ThrowsAsync<BusinessException>(
             () => service.RegisterAsync(request));
 
         Assert.Equal(
@@ -128,6 +153,8 @@ public class AuthServiceTests
         var service = new AuthService(
             _context,
             _jwtServiceMock.Object,
+            _registerValidatorMock.Object,
+            _loginValidatorMock.Object,
             _loggerMock.Object);
 
         var request = new LoginRequest
@@ -136,7 +163,7 @@ public class AuthServiceTests
             Password = "123456@Ab"
         };
 
-        var exception = await Assert.ThrowsAsync<Exception>(
+        var exception = await Assert.ThrowsAsync<UnauthorizedException>(
             () => service.LoginAsync(request));
 
         Assert.Equal(
@@ -164,6 +191,8 @@ public class AuthServiceTests
         var service = new AuthService(
             _context,
             _jwtServiceMock.Object,
+            _registerValidatorMock.Object,
+            _loginValidatorMock.Object,
             _loggerMock.Object);
 
         var request = new LoginRequest
@@ -172,7 +201,7 @@ public class AuthServiceTests
             Password = "senha-errada"
         };
 
-        var exception = await Assert.ThrowsAsync<Exception>(
+        var exception = await Assert.ThrowsAsync<UnauthorizedException>(
             () => service.LoginAsync(request));
 
         Assert.Equal(

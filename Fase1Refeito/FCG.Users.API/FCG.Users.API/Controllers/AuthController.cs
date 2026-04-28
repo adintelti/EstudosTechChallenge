@@ -1,8 +1,5 @@
 ﻿using FCG.Users.Application.DTOs;
 using FCG.Users.Application.Services;
-using FCG.Users.Domain.Entities;
-using FCG.Users.Infrastructure.Persistence;
-using FCG.Users.Infrastructure.Security;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FCG.Users.API.Controllers

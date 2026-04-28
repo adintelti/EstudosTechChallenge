@@ -88,6 +88,8 @@ builder.Services.AddScoped<UserGameService>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateGameRequestValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateGameRequestValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<RegisterRequestValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<LoginRequestValidator>();
 
 var app = builder.Build();
 

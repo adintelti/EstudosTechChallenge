@@ -149,7 +149,7 @@ public class UserGameServiceTests
 
         var service = new UserGameService(_context, _loggerMock.Object);
 
-        var exception = await Assert.ThrowsAsync<Exception>(
+        var exception = await Assert.ThrowsAsync<BusinessException>(
             () => service.AcquireGameAsync(
                 user.Id,
                 game.Id));

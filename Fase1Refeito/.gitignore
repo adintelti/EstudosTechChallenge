@@ -1,0 +1,115 @@
+# =========================
+# Build
+# =========================
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# =========================
+# Visual Studio
+# =========================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# =========================
+# Rider / JetBrains
+# =========================
+.idea/
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# NuGet
+# =========================
+*.nupkg
+packages/
+.nuget/
+
+# =========================
+# Test Results
+# =========================
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# =========================
+# Entity Framework
+# =========================
+*.dbmdl
+*.jfm
+
+# =========================
+# Publish
+# =========================
+publish/
+*.publishsettings
+
+# =========================
+# Docker
+# =========================
+docker-compose.override.yml
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+.env.*
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# =========================
+# OS Files
+# =========================
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# =========================
+# Node
+# =========================
+node_modules/
+
+# =========================
+# Resharper
+# =========================
+_ReSharper*/
+*.DotSettings.user
+
+# =========================
+# Azure
+# =========================
+*.azurePubxml
+
+# =========================
+# Temporary files
+# =========================
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# =========================
+# Serilog log files
+# =========================
+*.log
+Logs/
+
+# =========================
+# SQL LocalDB
+# =========================
+*.mdf
+*.ldf
+
+# =========================
+# Generated files
+# =========================
+Generated/
